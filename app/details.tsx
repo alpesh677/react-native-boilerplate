@@ -1,5 +1,6 @@
 import { Link } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 export default function DetailsScreen() {
   return (
@@ -13,24 +14,26 @@ export default function DetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: theme.spacing.sm,
   },
   title: {
-    fontSize: 24,
+    fontSize: theme.typography.title,
     fontWeight: 'bold',
+    color: theme.colors.text,
   },
   text: {
-    fontSize: 16,
+    fontSize: theme.typography.body,
+    color: theme.colors.text,
   },
   link: {
-    marginTop: 12,
-    fontSize: 18,
-    color: '#2e78b7',
+    marginTop: theme.spacing.md,
+    fontSize: theme.typography.link,
+    color: theme.colors.primary,
   },
-});
+}));

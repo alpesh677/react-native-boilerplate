@@ -1,38 +1,60 @@
 import { Link } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { useAppTheme } from '@/hooks/useAppTheme';
 
 export default function HomeScreen() {
+  const { themeName, isDark, isManual, toggle, resetToSystem } = useAppTheme();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
       <Text style={styles.text}>Open up app/index.tsx to start working on your app!</Text>
+      <Text style={styles.text}>
+        Theme: {themeName}
+        {isManual ? ' (manual)' : ' (system)'}
+      </Text>
       <Link href="/details" style={styles.link}>
         Go to Details
       </Link>
-      <StatusBar style="auto" />
+      <Link href="/posts" style={styles.link}>
+        Go to Posts
+      </Link>
+      <View style={styles.themeRow}>
+        <Button title={isDark ? 'Switch to light' : 'Switch to dark'} onPress={toggle} />
+        {isManual ? <Button title="Follow system" onPress={resetToSystem} /> : null}
+      </View>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: theme.spacing.sm,
   },
   title: {
-    fontSize: 24,
+    fontSize: theme.typography.title,
     fontWeight: 'bold',
+    color: theme.colors.text,
   },
   text: {
-    fontSize: 16,
+    fontSize: theme.typography.body,
+    color: theme.colors.text,
   },
   link: {
-    marginTop: 12,
-    fontSize: 18,
-    color: '#2e78b7',
+    marginTop: theme.spacing.md,
+    fontSize: theme.typography.link,
+    color: theme.colors.primary,
   },
-});
+  themeRow: {
+    flexDirection: 'row',
+    gap: theme.spacing.sm,
+    marginTop: theme.spacing.md,
+  },
+}));
